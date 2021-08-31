@@ -1,16 +1,19 @@
 const { merge } = require('webpack-merge');
-const commonConfig = require('./webpack.common')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
-const packagesJson = require('../package.json');
+const commonConfig = require('./webpack.common');
+const packageJson = require('../package.json');
 
 const devConfig = {
   mode: 'development',
+  output: {
+    publicPath: 'http://localhost:8081/',
+  },
   devServer: {
     port: 8081,
     historyApiFallback: {
-      index: 'index.html'
-    }
+      index: 'index.html',
+    },
   },
   plugins: [
     new ModuleFederationPlugin({
@@ -19,12 +22,12 @@ const devConfig = {
       exposes: {
         './MarketingApp': './src/bootstrap',
       },
-      shared: packagesJson.dependencies,
+      shared: packageJson.dependencies,
     }),
     new HtmlWebpackPlugin({
-      template: './public/index.html'
-    })
-  ]
-}
+      template: './public/index.html',
+    }),
+  ],
+};
 
 module.exports = merge(commonConfig, devConfig);
