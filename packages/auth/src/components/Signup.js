@@ -124,7 +124,7 @@ export default function SignUp({ onSignIn }) {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={onSignIn}
+            // onClick={onSignIn}
           >
             Sign Up
           </Button>
